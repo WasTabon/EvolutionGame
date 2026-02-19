@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f24b5cb2b1c82e643b82c3595aad17fa, type: 3}
+  m_Name: WorldObject_Small
+  m_EditorClassIdentifier: 
+  type: 0
+  scale: 0.3
+  points: 10
+  growthAmount: 0.04
+  moveSpeed: 1.8
+  mesh: {fileID: 0}
+  material: {fileID: 0}
