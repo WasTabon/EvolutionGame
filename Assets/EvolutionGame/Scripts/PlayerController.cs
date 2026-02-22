@@ -96,7 +96,13 @@ public class PlayerController : MonoBehaviour
             ScoreManager.Instance.AddScore(worldObj.GetPoints(), other.transform.position);
 
             if (AbsorptionEffect.Instance != null)
-                AbsorptionEffect.Instance.Play(other.transform.position, objScale);
+            {
+                Color? objColor = null;
+                MeshRenderer mr = other.GetComponent<MeshRenderer>();
+                if (mr != null && mr.sharedMaterial != null)
+                    objColor = mr.sharedMaterial.color;
+                AbsorptionEffect.Instance.Play(other.transform.position, objScale, objColor);
+            }
 
             if (objScale > currentScale * 0.5f && CameraShake.Instance != null)
                 CameraShake.Instance.Shake(0.12f, 0.15f, 8);

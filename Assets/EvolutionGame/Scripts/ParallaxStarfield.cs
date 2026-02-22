@@ -56,6 +56,12 @@ public class ParallaxStarfield : MonoBehaviour
         GameObject layerParent = new GameObject("StarLayer_" + layerIndex);
         layerParent.transform.SetParent(transform);
 
+        Material sharedMat = new Material(Shader.Find("Universal Render Pipeline/Lit"));
+        sharedMat.color = Color.white;
+        sharedMat.EnableKeyword("_EMISSION");
+        sharedMat.SetColor("_EmissionColor", Color.white * 0.5f);
+        sharedMat.SetFloat("_Smoothness", 0f);
+
         for (int i = 0; i < layer.count; i++)
         {
             GameObject go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -74,26 +80,21 @@ public class ParallaxStarfield : MonoBehaviour
             go.transform.position = new Vector3(go.transform.position.x, -1f - layerIndex * 0.5f, go.transform.position.z);
 
             float alpha = Random.Range(layer.minAlpha, layer.maxAlpha);
-            Material mat = new Material(Shader.Find("Universal Render Pipeline/Lit"));
-            mat.color = new Color(1f, 1f, 1f, 1f);
-            mat.EnableKeyword("_EMISSION");
-            mat.SetColor("_EmissionColor", Color.white * alpha * 0.8f);
-            mat.SetFloat("_Smoothness", 0f);
 
             MeshRenderer mr = go.GetComponent<MeshRenderer>();
-            mr.sharedMaterial = mat;
+            mr.sharedMaterial = sharedMat;
             mr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             mr.receiveShadows = false;
 
             stars.Add(new StarData
             {
-                transform    = go.transform,
-                renderer     = mr,
-                baseOffset   = offset,
+                transform     = go.transform,
+                renderer      = mr,
+                baseOffset    = offset,
                 twinkleOffset = Random.Range(0f, Mathf.PI * 2f),
                 twinkleSpeed  = layer.twinkleSpeed * Random.Range(0.7f, 1.3f),
-                baseAlpha    = alpha,
-                color        = Color.white
+                baseAlpha     = alpha,
+                color         = Color.white
             });
         }
 
@@ -128,10 +129,6 @@ public class ParallaxStarfield : MonoBehaviour
                 }
 
                 star.transform.position = pos;
-
-                float twinkle = Mathf.Sin(Time.time * star.twinkleSpeed + star.twinkleOffset) * 0.12f;
-                float emission = Mathf.Clamp01(star.baseAlpha + twinkle) * 0.8f;
-                star.renderer.sharedMaterial.SetColor("_EmissionColor", Color.white * emission);
             }
         }
     }

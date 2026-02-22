@@ -61,10 +61,25 @@ public class EvolutionManager : MonoBehaviour
         if (playerRenderer != null && stage.playerMaterial != null)
             playerRenderer.material = stage.playerMaterial;
 
+        if (player != null && stage.playerMesh != null)
+        {
+            MeshFilter mf = player.GetComponent<MeshFilter>();
+            if (mf != null) mf.mesh = stage.playerMesh;
+        }
+
+        if (playerRenderer != null && playerRenderer.material != null)
+        {
+            Material mat = playerRenderer.material;
+            if (mat.HasProperty("_EmissionColor"))
+            {
+                mat.EnableKeyword("_EMISSION");
+                mat.SetColor("_EmissionColor", stage.trailColor * stage.emissionIntensity);
+            }
+        }
+
         if (trailRenderer != null)
         {
             Gradient gradient = new Gradient();
-            Color trailEnd = new Color(stage.trailColor.r, stage.trailColor.g, stage.trailColor.b, 0f);
             gradient.SetKeys(
                 new GradientColorKey[] {
                     new GradientColorKey(stage.trailColor, 0f),
