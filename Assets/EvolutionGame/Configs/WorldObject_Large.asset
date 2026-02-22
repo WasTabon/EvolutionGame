@@ -18,4 +18,4 @@ MonoBehaviour:
   growthAmount: 0.35
   moveSpeed: 0.5
   mesh: {fileID: 0}
-  material: {fileID: 0}
+  material: {fileID: 2100000, guid: 7f05310c5aab53048aac5aa0865ba526, type: 2}

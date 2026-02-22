@@ -7,8 +7,7 @@ public class GameHUD : MonoBehaviour
     public Text scoreText;
     public Text stageText;
     public CanvasGroup canvasGroup;
-
-    private int displayedScore;
+    public Image progressBarFill;
 
     void OnEnable()
     {
@@ -41,12 +40,12 @@ public class GameHUD : MonoBehaviour
 
         if (scoreText != null) scoreText.text = "0";
         if (stageText != null) stageText.text = "Spark";
+        if (progressBarFill != null) progressBarFill.fillAmount = 0f;
     }
 
     void OnScoreChanged(float score)
     {
         if (scoreText == null) return;
-
         scoreText.text = Mathf.RoundToInt(score).ToString();
         scoreText.transform.DOKill();
         scoreText.transform.DOPunchScale(Vector3.one * 0.25f, 0.18f, 1, 0.5f);
@@ -64,5 +63,12 @@ public class GameHUD : MonoBehaviour
         stageText.text = stageName;
         stageText.transform.DOKill();
         stageText.transform.DOPunchScale(Vector3.one * 0.3f, 0.25f, 1, 0.5f);
+    }
+
+    public void SetProgress(float value)
+    {
+        if (progressBarFill == null) return;
+        progressBarFill.DOKill();
+        progressBarFill.DOFillAmount(Mathf.Clamp01(value), 0.3f).SetEase(Ease.OutQuad);
     }
 }

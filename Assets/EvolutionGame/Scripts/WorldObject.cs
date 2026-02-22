@@ -38,9 +38,18 @@ public class WorldObject : MonoBehaviour
         Collider col = GetComponent<Collider>();
         if (col != null) col.enabled = false;
 
-        transform.DOMove(targetPos, 0.25f).SetEase(Ease.InCubic);
-        transform.DOScale(Vector3.zero, 0.25f).SetEase(Ease.InCubic)
-            .OnComplete(() => Destroy(gameObject));
+        Vector3 awayDir = (transform.position - targetPos).normalized;
+        Vector3 anticipationPos = transform.position + awayDir * (config.scale * 0.4f);
+
+        transform.DOKill();
+        transform.DOMove(anticipationPos, 0.07f).SetEase(Ease.OutQuad).OnComplete(() =>
+        {
+            transform.DOMove(targetPos, 0.22f).SetEase(Ease.InCubic);
+            transform.DOScale(Vector3.zero, 0.22f).SetEase(Ease.InCubic)
+                .OnComplete(() => Destroy(gameObject));
+        });
+
+        transform.DOScale(transform.localScale * 1.15f, 0.07f).SetEase(Ease.OutQuad);
     }
 
     public float GetScale() => scale;

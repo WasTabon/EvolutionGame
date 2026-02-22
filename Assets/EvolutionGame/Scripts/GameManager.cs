@@ -57,7 +57,10 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("Game");
+        if (SceneTransition.Instance != null)
+            SceneTransition.Instance.LoadScene("Game");
+        else
+            SceneManager.LoadScene("Game");
     }
 
     public void GameOver()
@@ -67,11 +70,17 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
-        SceneManager.LoadScene("Game");
+        if (SceneTransition.Instance != null)
+            SceneTransition.Instance.LoadScene("Game");
+        else
+            SceneManager.LoadScene("Game");
     }
 
     public void GoToMenu()
     {
-        SceneManager.LoadScene("MainMenu");
+        if (SceneTransition.Instance != null)
+            SceneTransition.Instance.LoadScene("MainMenu");
+        else
+            SceneManager.LoadScene("MainMenu");
     }
 }

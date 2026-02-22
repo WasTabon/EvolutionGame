@@ -13,7 +13,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         Debug.Assert(config != null, "PlayerController: PlayerConfig is not assigned!");
-
         currentScale = config.baseScale;
         transform.localScale = Vector3.one * currentScale;
         ApplyVisuals();
@@ -23,11 +22,8 @@ public class PlayerController : MonoBehaviour
     {
         MeshFilter mf = GetComponent<MeshFilter>();
         MeshRenderer mr = GetComponent<MeshRenderer>();
-
-        if (config.mesh != null && mf != null)
-            mf.mesh = config.mesh;
-        if (config.material != null && mr != null)
-            mr.material = config.material;
+        if (config.mesh != null && mf != null) mf.mesh = config.mesh;
+        if (config.material != null && mr != null) mr.material = config.material;
     }
 
     void Update()
@@ -38,7 +34,6 @@ public class PlayerController : MonoBehaviour
 
         Vector3 inputDir = GetInputDirection();
         float speed = Mathf.Max(config.minSpeed, config.baseSpeed - (currentScale - config.baseScale) * config.speedScalePenalty);
-
         velocity = Vector3.Lerp(velocity, inputDir * speed, config.inertiaSmoothing * Time.deltaTime);
         transform.position += velocity * Time.deltaTime;
     }
@@ -48,8 +43,7 @@ public class PlayerController : MonoBehaviour
         if (IsPointerOverUI()) return Vector3.zero;
 
         Vector3 wasd = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
-        if (wasd.sqrMagnitude > 0.01f)
-            return wasd.normalized;
+        if (wasd.sqrMagnitude > 0.01f) return wasd.normalized;
 
         if (Input.touchCount > 0)
         {
@@ -74,8 +68,7 @@ public class PlayerController : MonoBehaviour
             Vector3 worldPoint = ray.GetPoint(dist);
             Vector3 dir = worldPoint - transform.position;
             dir.y = 0f;
-            if (dir.sqrMagnitude > 0.25f)
-                return dir.normalized;
+            if (dir.sqrMagnitude > 0.25f) return dir.normalized;
         }
         return Vector3.zero;
     }
@@ -101,6 +94,13 @@ public class PlayerController : MonoBehaviour
         if (objScale < currentScale * 0.9f)
         {
             ScoreManager.Instance.AddScore(worldObj.GetPoints());
+
+            if (AbsorptionEffect.Instance != null)
+                AbsorptionEffect.Instance.Play(other.transform.position, objScale);
+
+            if (objScale > currentScale * 0.5f && CameraShake.Instance != null)
+                CameraShake.Instance.Shake(0.12f, 0.15f, 8);
+
             Grow(worldObj.GetGrowthAmount());
             worldObj.GetAbsorbed(transform.position);
         }
@@ -120,10 +120,15 @@ public class PlayerController : MonoBehaviour
     void Die()
     {
         isDead = true;
+
+        if (CameraShake.Instance != null)
+            CameraShake.Instance.Shake(0.5f, 0.6f, 14);
+
         transform.DOKill();
         transform.DOScale(Vector3.zero, 0.4f).SetEase(Ease.InBack)
             .OnComplete(() => GameManager.Instance.GameOver());
     }
 
     public float GetCurrentScale() => currentScale;
+    public float GetVelocityMagnitude() => velocity.magnitude;
 }
