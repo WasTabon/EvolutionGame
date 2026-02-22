@@ -10,6 +10,7 @@ public class GameOverUI : MonoBehaviour
     public Button menuButton;
     public CanvasGroup canvasGroup;
     public RectTransform panel;
+    public Text stageReachedText;
 
     void OnEnable()
     {
@@ -59,25 +60,34 @@ public class GameOverUI : MonoBehaviour
     void ShowGameOver()
     {
         float score = ScoreManager.Instance != null ? ScoreManager.Instance.GetScore() : 0f;
-        float best = PlayerPrefs.GetFloat("BestScore", 0f);
+        float best = ScoreManager.Instance != null ? ScoreManager.Instance.GetBestScore() : 0f;
 
-        if (score > best)
+        if (stageReachedText != null && EvolutionManager.Instance != null)
         {
-            best = score;
-            PlayerPrefs.SetFloat("BestScore", best);
-            PlayerPrefs.Save();
+            int idx = EvolutionManager.Instance.GetCurrentStageIndex();
+            string stageName = EvolutionManager.Instance.GetCurrentStageName();
+            stageReachedText.text = stageName.ToUpper();
         }
 
-        if (scoreText != null) scoreText.text = Mathf.RoundToInt(score).ToString();
         if (bestScoreText != null) bestScoreText.text = Mathf.RoundToInt(best).ToString();
 
         if (panel != null) panel.localScale = Vector3.one * 0.6f;
 
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
-
         canvasGroup.DOFade(1f, 0.4f).SetDelay(0.3f);
+
         if (panel != null)
             panel.DOScale(1f, 0.45f).SetEase(Ease.OutBack).SetDelay(0.3f);
+
+        if (scoreText != null)
+        {
+            float displayScore = 0f;
+            DOTween.To(() => displayScore, x =>
+            {
+                displayScore = x;
+                scoreText.text = Mathf.RoundToInt(displayScore).ToString();
+            }, score, 1.2f).SetEase(Ease.OutQuart).SetDelay(0.5f);
+        }
     }
 }

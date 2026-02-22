@@ -93,7 +93,7 @@ public class PlayerController : MonoBehaviour
 
         if (objScale < currentScale * 0.9f)
         {
-            ScoreManager.Instance.AddScore(worldObj.GetPoints());
+            ScoreManager.Instance.AddScore(worldObj.GetPoints(), other.transform.position);
 
             if (AbsorptionEffect.Instance != null)
                 AbsorptionEffect.Instance.Play(other.transform.position, objScale);

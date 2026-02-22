@@ -115,4 +115,12 @@ public class EvolutionManager : MonoBehaviour
         float progress = Mathf.InverseLerp(currentThreshold, nextThreshold, currentScale);
         hud.SetProgress(progress);
     }
+
+    public int GetCurrentStageIndex() => currentStageIndex;
+
+    public string GetCurrentStageName()
+    {
+        if (config == null || config.stages.Length == 0) return "";
+        return config.stages[Mathf.Clamp(currentStageIndex, 0, config.stages.Length - 1)].stageName;
+    }
 }
