@@ -82,6 +82,7 @@ public class EvolutionManager : MonoBehaviour
         if (animated)
         {
             OnStageChanged?.Invoke(index, stage);
+            AudioManager.Instance?.PlayEvolutionSFX();
 
             if (player != null)
                 player.transform.DOPunchScale(Vector3.one * 0.35f, 0.4f, 6, 0.5f);

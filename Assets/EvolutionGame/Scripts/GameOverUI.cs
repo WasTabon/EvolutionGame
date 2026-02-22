@@ -40,6 +40,7 @@ public class GameOverUI : MonoBehaviour
         {
             restartButton.interactable = false;
             menuButton.interactable = false;
+            AudioManager.Instance?.PlayButtonSFX();
             GameManager.Instance.RestartGame();
         });
 
@@ -47,6 +48,7 @@ public class GameOverUI : MonoBehaviour
         {
             restartButton.interactable = false;
             menuButton.interactable = false;
+            AudioManager.Instance?.PlayButtonSFX();
             GameManager.Instance.GoToMenu();
         });
     }

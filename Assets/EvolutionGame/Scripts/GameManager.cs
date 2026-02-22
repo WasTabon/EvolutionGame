@@ -53,6 +53,19 @@ public class GameManager : MonoBehaviour
     {
         CurrentState = state;
         OnStateChanged?.Invoke(state);
+
+        switch (state)
+        {
+            case GameState.Playing:
+                AudioManager.Instance?.PlayGameMusic();
+                break;
+            case GameState.GameOver:
+                AudioManager.Instance?.PlayGameOverMusic();
+                break;
+            case GameState.Menu:
+                AudioManager.Instance?.PlayMenuMusic();
+                break;
+        }
     }
 
     public void StartGame()

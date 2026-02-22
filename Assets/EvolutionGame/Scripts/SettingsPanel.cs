@@ -9,8 +9,7 @@ public class SettingsPanel : MonoBehaviour
     public Slider musicSlider;
     public Slider sfxSlider;
     public Button closeButton;
-
-    private bool isVisible;
+    public Button bgButton;
 
     void OnEnable()
     {
@@ -18,6 +17,12 @@ public class SettingsPanel : MonoBehaviour
         {
             closeButton.onClick.RemoveListener(Hide);
             closeButton.onClick.AddListener(Hide);
+        }
+
+        if (bgButton != null)
+        {
+            bgButton.onClick.RemoveListener(Hide);
+            bgButton.onClick.AddListener(Hide);
         }
 
         if (musicSlider != null)
@@ -45,7 +50,6 @@ public class SettingsPanel : MonoBehaviour
 
     public void Show()
     {
-        isVisible = true;
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
         canvasGroup.DOKill();
@@ -57,7 +61,6 @@ public class SettingsPanel : MonoBehaviour
 
     public void Hide()
     {
-        isVisible = false;
         canvasGroup.DOKill();
         canvasGroup.DOFade(0f, 0.2f).SetEase(Ease.InQuad).OnComplete(() =>
         {
@@ -71,10 +74,13 @@ public class SettingsPanel : MonoBehaviour
     void OnMusicChanged(float val)
     {
         PlayerPrefs.SetFloat("MusicVolume", val);
+        AudioManager.Instance?.SetMusicVolume(val);
     }
 
     void OnSFXChanged(float val)
     {
         PlayerPrefs.SetFloat("SFXVolume", val);
+        AudioManager.Instance?.SetSFXVolume(val);
     }
 }
+

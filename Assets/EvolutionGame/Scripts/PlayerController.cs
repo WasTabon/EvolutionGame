@@ -101,6 +101,8 @@ public class PlayerController : MonoBehaviour
             if (objScale > currentScale * 0.5f && CameraShake.Instance != null)
                 CameraShake.Instance.Shake(0.12f, 0.15f, 8);
 
+            AudioManager.Instance?.PlayAbsorptionSFX();
+
             Grow(worldObj.GetGrowthAmount());
             worldObj.GetAbsorbed(transform.position);
         }
@@ -116,6 +118,8 @@ public class PlayerController : MonoBehaviour
         transform.DOKill();
         transform.DOScale(Vector3.one * currentScale, 0.35f).SetEase(Ease.OutBack);
 
+        AudioManager.Instance?.PlayGrowSFX();
+
         if (EvolutionManager.Instance != null)
             EvolutionManager.Instance.OnPlayerScaleChanged(currentScale);
     }
@@ -126,6 +130,8 @@ public class PlayerController : MonoBehaviour
 
         if (CameraShake.Instance != null)
             CameraShake.Instance.Shake(0.5f, 0.6f, 14);
+
+        AudioManager.Instance?.PlayDeathSFX();
 
         transform.DOKill();
         transform.DOScale(Vector3.zero, 0.4f).SetEase(Ease.InBack)

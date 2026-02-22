@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using DG.Tweening;
 
 public class MainMenuUI : MonoBehaviour
@@ -38,6 +39,7 @@ public class MainMenuUI : MonoBehaviour
     void OnStartClicked()
     {
         startButton.interactable = false;
+        AudioManager.Instance?.PlayButtonSFX();
         startButton.transform.DOScale(0.9f, 0.08f).SetEase(Ease.InBack).OnComplete(() =>
         {
             startButton.transform.DOScale(1f, 0.07f).OnComplete(() =>
