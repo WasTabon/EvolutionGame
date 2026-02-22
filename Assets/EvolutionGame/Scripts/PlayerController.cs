@@ -35,6 +35,17 @@ public class PlayerController : MonoBehaviour
         Vector3 inputDir = GetInputDirection();
         float speed = Mathf.Max(config.minSpeed, config.baseSpeed - (currentScale - config.baseScale) * config.speedScalePenalty);
         velocity = Vector3.Lerp(velocity, inputDir * speed, config.inertiaSmoothing * Time.deltaTime);
+
+        if (GravitationalWaveEvent.Instance != null)
+        {
+            float force = GravitationalWaveEvent.Instance.GetForce();
+            if (force > 0f)
+            {
+                Vector3 toCenter = (Vector3.zero - transform.position).normalized;
+                velocity += toCenter * force * Time.deltaTime;
+            }
+        }
+
         transform.position += velocity * Time.deltaTime;
     }
 
@@ -146,4 +157,5 @@ public class PlayerController : MonoBehaviour
 
     public float GetCurrentScale() => currentScale;
     public float GetVelocityMagnitude() => velocity.magnitude;
+    public void ForceKill() { if (!isDead) Die(); }
 }

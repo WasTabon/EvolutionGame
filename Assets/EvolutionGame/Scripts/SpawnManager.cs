@@ -27,17 +27,29 @@ public class SpawnManager : MonoBehaviour
         Instance = this;
     }
 
+    private float spawnMultiplier = 1f;
+
+    public void SetSpawnMultiplier(float mult)
+    {
+        spawnMultiplier = mult;
+    }
+
     void Update()
     {
         if (GameManager.Instance == null) return;
         if (GameManager.Instance.CurrentState != GameState.Playing) return;
 
         timer += Time.deltaTime;
-        if (timer >= spawnInterval)
+        float effectiveInterval = spawnInterval / spawnMultiplier;
+        if (timer >= effectiveInterval)
         {
             timer = 0f;
-            if (activeObjects.Count < maxObjects)
-                SpawnObject();
+            int spawnCount = Mathf.RoundToInt(spawnMultiplier);
+            for (int i = 0; i < spawnCount; i++)
+            {
+                if (activeObjects.Count < maxObjects * spawnMultiplier)
+                    SpawnObject();
+            }
         }
 
         CleanupObjects();
