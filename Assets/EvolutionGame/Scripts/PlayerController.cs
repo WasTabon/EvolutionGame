@@ -115,6 +115,9 @@ public class PlayerController : MonoBehaviour
         currentScale += amount;
         transform.DOKill();
         transform.DOScale(Vector3.one * currentScale, 0.35f).SetEase(Ease.OutBack);
+
+        if (EvolutionManager.Instance != null)
+            EvolutionManager.Instance.OnPlayerScaleChanged(currentScale);
     }
 
     void Die()
