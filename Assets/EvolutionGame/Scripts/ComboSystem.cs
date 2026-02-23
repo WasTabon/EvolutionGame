@@ -5,6 +5,7 @@ public class ComboSystem : MonoBehaviour
     public static ComboSystem Instance;
 
     public float comboResetTime = 2.5f;
+    public GameBalanceConfig balanceConfig;
 
     private int comboCount;
     private float lastAbsorptionTime;
@@ -18,6 +19,7 @@ public class ComboSystem : MonoBehaviour
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
+        if (balanceConfig != null) comboResetTime = balanceConfig.comboResetTime;
     }
 
     void Update()

@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d53694f913a6cec479d4b679561151cf, type: 3}
+  m_Name: GameBalanceConfig
+  m_EditorClassIdentifier: 
+  baseSpeed: 5
+  minSpeed: 1.5
+  speedScalePenalty: 0.4
+  inertiaSmoothing: 8
+  absorptionThreshold: 0.9
+  deathThreshold: 1.1
+  spawnRadius: 18
+  despawnRadius: 28
+  baseSpawnInterval: 0.8
+  baseMaxObjects: 35
+  comboResetTime: 2.5
+  eventMinInterval: 25
+  eventMaxInterval: 45
+  starStormDuration: 10
+  starStormMultiplier: 3
+  gravWaveDuration: 6
+  gravWaveMaxForce: 4
+  hunterDuration: 15
+  hunterSpeed: 2.5
+  hunterScale: 2.2

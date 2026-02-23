@@ -11,6 +11,7 @@ public class GameOverUI : MonoBehaviour
     public CanvasGroup canvasGroup;
     public RectTransform panel;
     public Text stageReachedText;
+    public Text sessionTimeText;
 
     void OnEnable()
     {
@@ -62,14 +63,13 @@ public class GameOverUI : MonoBehaviour
     void ShowGameOver()
     {
         float score = ScoreManager.Instance != null ? ScoreManager.Instance.GetScore() : 0f;
-        float best = ScoreManager.Instance != null ? ScoreManager.Instance.GetBestScore() : 0f;
+        float best  = ScoreManager.Instance != null ? ScoreManager.Instance.GetBestScore() : 0f;
 
         if (stageReachedText != null && EvolutionManager.Instance != null)
-        {
-            int idx = EvolutionManager.Instance.GetCurrentStageIndex();
-            string stageName = EvolutionManager.Instance.GetCurrentStageName();
-            stageReachedText.text = stageName.ToUpper();
-        }
+            stageReachedText.text = EvolutionManager.Instance.GetCurrentStageName().ToUpper();
+
+        if (sessionTimeText != null && SessionTimer.Instance != null)
+            sessionTimeText.text = SessionTimer.Instance.GetFormatted();
 
         if (bestScoreText != null) bestScoreText.text = Mathf.RoundToInt(best).ToString();
 

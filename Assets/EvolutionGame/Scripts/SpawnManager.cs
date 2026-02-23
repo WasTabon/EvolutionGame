@@ -27,6 +27,19 @@ public class SpawnManager : MonoBehaviour
         Instance = this;
     }
 
+    public GameBalanceConfig balanceConfig;
+
+    void Start()
+    {
+        if (balanceConfig != null)
+        {
+            spawnRadius   = balanceConfig.spawnRadius;
+            despawnRadius = balanceConfig.despawnRadius;
+            spawnInterval = balanceConfig.baseSpawnInterval;
+            maxObjects    = balanceConfig.baseMaxObjects;
+        }
+    }
+
     private float spawnMultiplier = 1f;
 
     public void SetSpawnMultiplier(float mult)

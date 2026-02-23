@@ -5,6 +5,7 @@ using DG.Tweening;
 public class PlayerController : MonoBehaviour
 {
     public PlayerConfig config;
+    public GameBalanceConfig balanceConfig;
 
     private Vector3 velocity;
     private float currentScale;
@@ -17,6 +18,11 @@ public class PlayerController : MonoBehaviour
         transform.localScale = Vector3.one * currentScale;
         ApplyVisuals();
     }
+
+    float GetBaseSpeed()    => balanceConfig != null ? balanceConfig.baseSpeed    : config.baseSpeed;
+    float GetMinSpeed()     => balanceConfig != null ? balanceConfig.minSpeed     : config.minSpeed;
+    float GetSpeedPenalty() => balanceConfig != null ? balanceConfig.speedScalePenalty : config.speedScalePenalty;
+    float GetInertia()      => balanceConfig != null ? balanceConfig.inertiaSmoothing  : config.inertiaSmoothing;
 
     void ApplyVisuals()
     {
@@ -33,8 +39,8 @@ public class PlayerController : MonoBehaviour
         if (GameManager.Instance.CurrentState != GameState.Playing) return;
 
         Vector3 inputDir = GetInputDirection();
-        float speed = Mathf.Max(config.minSpeed, config.baseSpeed - (currentScale - config.baseScale) * config.speedScalePenalty);
-        velocity = Vector3.Lerp(velocity, inputDir * speed, config.inertiaSmoothing * Time.deltaTime);
+        float speed = Mathf.Max(GetMinSpeed(), GetBaseSpeed() - (currentScale - config.baseScale) * GetSpeedPenalty());
+        velocity = Vector3.Lerp(velocity, inputDir * speed, GetInertia() * Time.deltaTime);
 
         if (GravitationalWaveEvent.Instance != null)
         {
@@ -102,7 +108,10 @@ public class PlayerController : MonoBehaviour
 
         float objScale = worldObj.GetScale();
 
-        if (objScale < currentScale * 0.9f)
+        float absorbThreshold = balanceConfig != null ? balanceConfig.absorptionThreshold : 0.9f;
+        float deathThreshold  = balanceConfig != null ? balanceConfig.deathThreshold      : 1.1f;
+
+        if (objScale < currentScale * absorbThreshold)
         {
             ScoreManager.Instance.AddScore(worldObj.GetPoints(), other.transform.position);
 
@@ -123,7 +132,7 @@ public class PlayerController : MonoBehaviour
             Grow(worldObj.GetGrowthAmount());
             worldObj.GetAbsorbed(transform.position);
         }
-        else if (objScale > currentScale * 1.1f)
+        else if (objScale > currentScale * deathThreshold)
         {
             Die();
         }

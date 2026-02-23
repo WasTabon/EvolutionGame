@@ -11,6 +11,7 @@ public class GameHUD : MonoBehaviour
     public Image progressBarFill;
     public TextMeshProUGUI comboText;
     public CanvasGroup comboCG;
+    public TextMeshProUGUI sessionTimerText;
 
     void OnEnable()
     {
@@ -33,6 +34,12 @@ public class GameHUD : MonoBehaviour
             ComboSystem.Instance.OnComboReset -= OnComboReset;
             ComboSystem.Instance.OnComboReset += OnComboReset;
         }
+
+        if (SessionTimer.Instance != null)
+        {
+            SessionTimer.Instance.OnTick -= OnTimerTick;
+            SessionTimer.Instance.OnTick += OnTimerTick;
+        }
     }
 
     void OnDisable()
@@ -48,6 +55,9 @@ public class GameHUD : MonoBehaviour
             ComboSystem.Instance.OnComboChanged -= OnComboChanged;
             ComboSystem.Instance.OnComboReset -= OnComboReset;
         }
+
+        if (SessionTimer.Instance != null)
+            SessionTimer.Instance.OnTick -= OnTimerTick;
     }
 
     void Start()
@@ -59,6 +69,13 @@ public class GameHUD : MonoBehaviour
         if (stageText != null) stageText.text = "Spark";
         if (progressBarFill != null) progressBarFill.fillAmount = 0f;
         if (comboCG != null) comboCG.alpha = 0f;
+        if (sessionTimerText != null) sessionTimerText.text = "0:00";
+    }
+
+    void OnTimerTick(float elapsed)
+    {
+        if (sessionTimerText == null || SessionTimer.Instance == null) return;
+        sessionTimerText.text = SessionTimer.Instance.GetFormatted();
     }
 
     void OnScoreChanged(float score)
