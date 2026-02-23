@@ -218,6 +218,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trailRenderer: {fileID: 39744275}
   maxSpeed: 5
+  baseTrailWidth: 0.6
 --- !u!96 &39744275
 TrailRenderer:
   serializedVersion: 3
@@ -3328,6 +3329,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b22d20b2e792564196360aa2f5064bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  microSphereCount: 8
+  microSphereBaseSize: 0.12
+  microSphereLifetime: 2.2
+  microSphereSpeed: 4.5
 --- !u!199 &1039192688
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -9634,9 +9639,9 @@ RectTransform:
   m_Father: {fileID: 1214714587}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0.9426304}
-  m_AnchoredPosition: {x: 0, y: -0.51348877}
-  m_SizeDelta: {x: 0, y: -1.0269012}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0.20996094}
+  m_SizeDelta: {x: 0, y: 0.41999817}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1612128211
 MonoBehaviour:
@@ -10224,6 +10229,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1846518068}
   m_CullTransparentMesh: 1
+--- !u!1 &1867234556
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1867234558}
+  - component: {fileID: 1867234557}
+  m_Layer: 0
+  m_Name: GravitySystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1867234557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1867234556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 988723e3873b6944eae4e43a6b6fde9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravitationalConstant: 4
+--- !u!4 &1867234558
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1867234556}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1924953982
 GameObject:
   m_ObjectHideFlags: 0
@@ -10552,3 +10602,4 @@ SceneRoots:
   - {fileID: 137210983}
   - {fileID: 688021376}
   - {fileID: 1924953984}
+  - {fileID: 1867234558}

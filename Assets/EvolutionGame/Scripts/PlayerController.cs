@@ -52,6 +52,12 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        if (GravitySystem.Instance != null)
+        {
+            Vector3 gravity = GravitySystem.Instance.GetForceAt(transform.position, currentScale);
+            velocity += gravity * Time.deltaTime;
+        }
+
         transform.position += velocity * Time.deltaTime;
     }
 

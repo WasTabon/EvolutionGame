@@ -36,9 +36,17 @@ public class WorldObject : MonoBehaviour
     {
         if (isAbsorbed || config == null) return;
 
+        if (GetComponent<OrbitalObject>()?.enabled == true) return;
+
         float speedMult = DifficultyManager.Instance != null
             ? DifficultyManager.Instance.Current.speedMultiplier
             : 1f;
+
+        if (GravitySystem.Instance != null)
+        {
+            Vector3 gravity = GravitySystem.Instance.GetForceAt(transform.position, scale);
+            moveDirection = (moveDirection * config.moveSpeed * speedMult + gravity * Time.deltaTime).normalized;
+        }
 
         Vector3 move = moveDirection * config.moveSpeed * speedMult;
 
