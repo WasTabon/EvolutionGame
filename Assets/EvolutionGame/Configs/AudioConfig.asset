@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 269d201a9d5fcd748896c3dc202abc18, type: 3}
   m_Name: AudioConfig
   m_EditorClassIdentifier: 
-  menuMusic: {fileID: 0}
-  gameMusic: {fileID: 0}
+  menuMusic: {fileID: 8300000, guid: 810eaca1a6d5ef14a863bae0b58b32e8, type: 3}
+  gameMusic: {fileID: 8300000, guid: c9cd27020ed437e4da36f2d54a317f23, type: 3}
   gameOverMusic: {fileID: 0}
   absorptionSFX: []
   growSFX: {fileID: 0}
