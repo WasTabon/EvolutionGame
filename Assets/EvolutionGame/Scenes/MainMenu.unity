@@ -267,7 +267,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: GAME
+  m_Text: 
 --- !u!222 &111222962
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1089,7 +1089,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: EVOLUTION
+  m_Text: Spinolution
 --- !u!222 &387794711
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1132,7 +1132,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.1, y: 0.072815165}
   m_AnchorMax: {x: 0.88956714, y: 0.18}
-  m_AnchoredPosition: {x: 2.0319977, y: -0.7427368}
+  m_AnchoredPosition: {x: 2.0319824, y: -0.7429199}
   m_SizeDelta: {x: -0.45761108, y: 1.4854126}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &388742998
@@ -3322,7 +3322,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.20459716, y: 0.11018484}
   m_AnchorMax: {x: 0.20459716, y: 0.11018484}
-  m_AnchoredPosition: {x: 0.19998169, y: 0.7000122}
+  m_AnchoredPosition: {x: 0.19995117, y: 0.6999512}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1614481392
